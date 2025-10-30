@@ -3,10 +3,9 @@ import {
   QueryClientProvider as TanstackQueryClientProvider,
 } from "@tanstack/react-query";
 import type React from "react";
-import { ReactNode } from "react";
 
 interface Props {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 const QueryClientProvider: React.FC<Props> = ({ children }) => {
