@@ -1,9 +1,13 @@
+import ModeToggle from "@/components/ModeToggle";
 import { Box } from "@/components/ui/box";
+import { Button, ButtonText } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Heading } from "@/components/ui/heading";
-import { Text } from "react-native";
+import { Text } from "@/components/ui/text";
+import { useRouter } from "expo-router";
 
 export default function Index() {
+  const router = useRouter();
   return (
     <Box className="flex-1 flex justify-center items-center flex-col gap-6 bg-secondary-0">
       <Card
@@ -21,7 +25,10 @@ export default function Index() {
       <Text className="text-primary-900">
         Edit app/index.tsx to edit this screen.
       </Text>
-     
+      <Button onPress={() => router.navigate("/auth")}>
+        <ButtonText>Login</ButtonText>
+      </Button>
+      <ModeToggle />
     </Box>
   );
 }
