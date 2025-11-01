@@ -22,6 +22,18 @@ export default function RootLayout() {
               headerTitleAlign: "center",
             }}
           />
+          <Stack.Screen
+            name="auth"
+            options={{
+              headerStyle: {
+                backgroundColor: theme === "dark" ? "black" : "white",
+              },
+              headerTitleStyle: { color: theme === "dark" ? "white" : "black" },
+              title: "Welcome",
+              headerTitleAlign: "center",
+              headerBackVisible: false,
+            }}
+          />
         </Stack>
       </GluestackUIProvider>
     </QueryClientProvider>
