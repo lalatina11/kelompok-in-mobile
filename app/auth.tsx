@@ -16,8 +16,12 @@ const AuthPage = () => {
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
-      <Box className="p-3">
-        <Card size="md" variant="elevated" className="flex flex-col gap-6">
+      <Box className="p-3 flex-1 bg-background-0">
+        <Card
+          size="md"
+          variant="elevated"
+          className="flex flex-col gap-6 bg-background-50"
+        >
           <Box>
             <Heading size="md" className="">
               {isLoginPage ? "Login" : "Register"}
