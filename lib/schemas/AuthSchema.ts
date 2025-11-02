@@ -12,7 +12,7 @@ export type RoleType = z.infer<typeof assignRoleSchema>
 export const registerSchema = z.object({
     name: z.string().min(3, "Nama pengguna minimal 3 karakter").max(255, "Nama Pengguna maksimal 255 karakter"),
     email: z.email("Mohon isikan email yang valid"),
-    password: z.string().min(6, "Kata sandi minimal 6 karakter").max(32, "Kata sandi maksimal 32 karakter"),
+    password: z.string().min(8, "Kata sandi minimal 8 karakter").max(32, "Kata sandi maksimal 32 karakter"),
     iam_a: assignRoleSchema
 })
 
