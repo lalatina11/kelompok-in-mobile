@@ -2,14 +2,15 @@ import { Box } from "@/components/ui/box";
 import { Button, ButtonText } from "@/components/ui/button";
 import { Input, InputField } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
-import {
-  loginSchema,
-  LoginSchemaType
-} from "@/lib/schemas/AuthSchema";
+import { loginSchema, LoginSchemaType } from "@/lib/schemas/AuthSchema";
+import useSessionStore from "@/lib/stores/useSessionStore";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 
 const LoginForm = () => {
+  const { login } = useSessionStore();
+  const router = useRouter();
   const form = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -19,9 +20,10 @@ const LoginForm = () => {
   });
 
   const onSubmit = async (values: LoginSchemaType) => {
-    console.log(values);
+    const { error, message } = await login(values);
+    if (error) return form.setError("root", { message });
+    router.navigate("/");
   };
-
 
   return (
     <Box className="flex flex-col gap-4">
