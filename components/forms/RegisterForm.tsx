@@ -10,10 +10,12 @@ import {
 } from "@/lib/schemas/AuthSchema";
 import useSessionStore from "@/lib/stores/useSessionStore";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 
 const RegisterForm = () => {
   const { register } = useSessionStore();
+  const router = useRouter();
   const form = useForm({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -25,7 +27,11 @@ const RegisterForm = () => {
   });
 
   const onSubmit = async (values: RegisterSchemaType) => {
-    await register(values);
+    const { error, message } = await register(values);
+    if (error) {
+      return form.setError("root", { message });
+    }
+    return router.navigate("/");
   };
 
   const isTeacher = form.watch().iam_a === "teacher";
