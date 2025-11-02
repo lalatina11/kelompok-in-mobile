@@ -8,10 +8,12 @@ import {
   RegisterSchemaType,
   RoleType,
 } from "@/lib/schemas/AuthSchema";
+import useSessionStore from "@/lib/stores/useSessionStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 const RegisterForm = () => {
+  const { register } = useSessionStore();
   const form = useForm({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -22,8 +24,8 @@ const RegisterForm = () => {
     },
   });
 
-  const register = async (values: RegisterSchemaType) => {
-    console.log(values);
+  const onSubmit = async (values: RegisterSchemaType) => {
+    await register(values);
   };
 
   const isTeacher = form.watch().iam_a === "teacher";
@@ -129,7 +131,7 @@ const RegisterForm = () => {
           </Text>
         </Box>
       </Box>
-      <Button onPress={form.handleSubmit(register)}>
+      <Button onPress={form.handleSubmit(onSubmit)}>
         <ButtonText>Submit</ButtonText>
       </Button>
     </Box>
