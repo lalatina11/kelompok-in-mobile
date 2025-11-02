@@ -1,4 +1,5 @@
-import RegisterForm from "@/components/forms/Register";
+import LoginForm from "@/components/forms/LoginForm";
+import RegisterForm from "@/components/forms/RegisterForm";
 import { Box } from "@/components/ui/box";
 import { Card } from "@/components/ui/card";
 import { Heading } from "@/components/ui/heading";
@@ -27,7 +28,7 @@ const AuthPage = () => {
                 : "Register Your Account"}
             </Text>
           </Box>
-          <RegisterForm />
+          {isLoginPage ? <LoginForm /> : <RegisterForm />}
           <Box className="mx-auto flex flex-row gap-1">
             <Text className="text-sm">
               {isLoginPage
