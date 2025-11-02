@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { create } from "zustand"
 import { createJSONStorage, persist } from "zustand/middleware"
 import apiRequest from "../apiRequest"
-import { RegisterSchemaType } from "../schemas/AuthSchema"
+import { LoginSchemaType, RegisterSchemaType } from "../schemas/AuthSchema"
 
 export type AuthResponse = {
     error: boolean,
@@ -13,7 +13,7 @@ export type UseSessionStore = {
     isLoading: boolean
     session: any
     register: (body: RegisterSchemaType) => Promise<AuthResponse>
-    login: (body: RegisterSchemaType) => Promise<AuthResponse>
+    login: (body: LoginSchemaType) => Promise<AuthResponse>
     logout: (token: string) => Promise<AuthResponse>
 }
 
@@ -23,23 +23,20 @@ const useSessionStore = create(persist<UseSessionStore>(set => ({
     register: async (body) => {
         try {
             set(prevState => ({ ...prevState, isLoading: true }))
-            // console.log(ENV.EXPO_PUBLIC_LARAVEL_API_BASE_URL);
-            // const res = await fetch(ENV.EXPO_PUBLIC_LARAVEL_API_BASE_URL + "/register", {
-            //     method: "POST", body: JSON.stringify(body), headers: {
-            //         "Content-Type": "application/json",
-            //         Accept: "application/json"
-            //     }
-            // })
             const res = await apiRequest.post("/register", body)
-            console.log(res);
             const result = await res.json()
-            console.log(result);
-            set({ session: result, isLoading: false })
+            console.log({ result });
+            if (result.error || result.errors) {
+                throw new Error(result.message || result.error || "Something went wrong")
+            }
+            set(prev => ({ ...prev, session: result, }))
             return { error: false, message: "OK" }
         } catch (error) {
             console.log(error);
             const { message } = error as Error
             return { error: true, message }
+        } finally {
+            set(prev => ({ ...prev, isLoading: false }))
         }
     },
     login: async (body) => {
@@ -47,22 +44,31 @@ const useSessionStore = create(persist<UseSessionStore>(set => ({
             set(prevState => ({ ...prevState, isLoading: true }))
             const res = await apiRequest.post("/login", body)
             const result = await res.json()
-            set({ session: result, isLoading: false })
+            console.log({ result });
+            if (result.error || result.errors) {
+                throw new Error(result.message || result.error || "Something went wrong")
+            }
+            set(prev => ({ ...prev, session: result }))
             return { error: false, message: "OK" }
         } catch (error) {
+            console.log(error);
             const { message } = error as Error
             return { error: true, message }
+        } finally {
+            set(prev => ({ ...prev, isLoading: false }))
         }
     },
     logout: async (token) => {
         try {
             set(prevState => ({ ...prevState, isLoading: true }))
             await apiRequest.post("/logout", undefined, token)
-            set({ session: null, isLoading: false })
+            set(prev => ({ ...prev, session: null }))
             return { error: false, message: "OK" }
         } catch (error) {
             const { message } = error as Error
             return { error: true, message }
+        } finally {
+            set(prev => ({ ...prev, isLoading: false }))
         }
     }
 }), { name: "session", storage: createJSONStorage(() => AsyncStorage) }))
