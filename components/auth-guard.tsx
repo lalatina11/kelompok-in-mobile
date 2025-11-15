@@ -7,6 +7,7 @@ const AuthGuard = ({ children }: { children: ReactNode }) => {
   const { session } = useSessionStore();
   const segments = useSegments();
   const router = useRouter();
+
   useEffect(() => {
     if (!isMounted) {
       setIsMounted(true);
@@ -16,8 +17,7 @@ const AuthGuard = ({ children }: { children: ReactNode }) => {
       const isHasSession = session !== null;
       if (isInLoginPage && isHasSession) {
         router.navigate("/");
-      }
-      if (!isInLoginPage && !isHasSession) {
+      } else if (!isInLoginPage && !isHasSession) {
         router.navigate("/auth");
       }
     }
