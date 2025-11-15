@@ -1,5 +1,10 @@
 import { Box } from "@/components/ui/box";
-import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
+import {
+  Button,
+  ButtonIcon,
+  ButtonSpinner,
+  ButtonText,
+} from "@/components/ui/button";
 import { CheckIcon } from "@/components/ui/icon";
 import { Input, InputField } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
@@ -14,7 +19,7 @@ import { useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 
 const RegisterForm = () => {
-  const { register } = useSessionStore();
+  const { register, isLoading } = useSessionStore();
   const router = useRouter();
   const form = useForm({
     resolver: zodResolver(registerSchema),
@@ -35,6 +40,9 @@ const RegisterForm = () => {
   };
 
   const isTeacher = form.watch().iam_a === "teacher";
+
+  const isFormBusy =
+    form.formState.isLoading || form.formState.isSubmitting || isLoading;
 
   return (
     <Box className="flex flex-col gap-4">
@@ -141,8 +149,9 @@ const RegisterForm = () => {
           </Text>
         </Box>
       </Box>
-      <Button onPress={form.handleSubmit(onSubmit)}>
-        <ButtonText>Submit</ButtonText>
+      <Button disabled={isFormBusy} onPress={form.handleSubmit(onSubmit)}>
+        {isFormBusy && <ButtonSpinner />}
+        <ButtonText>{isFormBusy ? "Loading" : "Daftar"}</ButtonText>
       </Button>
     </Box>
   );
