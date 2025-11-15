@@ -5,8 +5,8 @@ import {
   ButtonSpinner,
   ButtonText,
 } from "@/components/ui/button";
-import { CheckIcon } from "@/components/ui/icon";
-import { Input, InputField } from "@/components/ui/input";
+import { CheckIcon, EyeIcon, EyeOffIcon } from "@/components/ui/icon";
+import { Input, InputField, InputIcon } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
 import {
   registerSchema,
@@ -17,9 +17,14 @@ import useSessionStore from "@/lib/stores/useSessionStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 const RegisterForm = () => {
   const { register, isLoading } = useSessionStore();
+  const [isShowPassword, setIsShowPassword] = useState({
+    password: false,
+    confirmPassword: false,
+  });
   const router = useRouter();
   const form = useForm({
     resolver: zodResolver(registerSchema),
@@ -32,6 +37,12 @@ const RegisterForm = () => {
   });
 
   const onSubmit = async (values: RegisterSchemaType) => {
+    const { password, confirmPassword } = values;
+    if (password !== confirmPassword) {
+      return form.setError("confirmPassword", {
+        message: "Password dan Konfirmasi Password harus sama",
+      });
+    }
     const { error, message } = await register(values);
     if (error) {
       return form.setError("root", { message });
@@ -107,11 +118,58 @@ const RegisterForm = () => {
             className="text-lg"
             onChangeText={(val) => form.setValue("password", val)}
             placeholder="Isikan Password"
+            type={isShowPassword.password ? "text" : "password"}
           />
+          <Button
+            onPress={() =>
+              setIsShowPassword((prev) => ({
+                ...prev,
+                password: !prev.password,
+              }))
+            }
+            variant="outline"
+          >
+            <InputIcon as={isShowPassword.password ? EyeOffIcon : EyeIcon} />
+          </Button>
         </Input>
         {form.formState.errors.password?.message && (
           <Text className="text-error-500">
             {form.formState.errors.password?.message}
+          </Text>
+        )}
+      </Box>
+      <Box className="flex flex-col gap-2">
+        <Text className="text-lg">Konfirmasi Password</Text>
+        <Input
+          variant="outline"
+          size="md"
+          isDisabled={false}
+          isInvalid={false}
+          isReadOnly={false}
+        >
+          <InputField
+            className="text-lg"
+            onChangeText={(val) => form.setValue("confirmPassword", val)}
+            placeholder="Konfirmasi Password"
+            type={isShowPassword.confirmPassword ? "text" : "password"}
+          />
+          <Button
+            onPress={() =>
+              setIsShowPassword((prev) => ({
+                ...prev,
+                confirmPassword: !prev.confirmPassword,
+              }))
+            }
+            variant="outline"
+          >
+            <InputIcon
+              as={isShowPassword.confirmPassword ? EyeOffIcon : EyeIcon}
+            />
+          </Button>
+        </Input>
+        {form.formState.errors.confirmPassword?.message && (
+          <Text className="text-error-500">
+            {form.formState.errors.confirmPassword?.message}
           </Text>
         )}
       </Box>
