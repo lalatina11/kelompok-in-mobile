@@ -24,6 +24,19 @@ export type UseSessionStore = {
   logout: (token: string) => Promise<AuthResponse>;
 };
 
+const getUserInfoByAccessToken = async (access_token: string) => {
+  const gettingUserInfoRes = await apiRequest.get("/me", access_token);
+  const gettingUserInfoResult =
+    (await gettingUserInfoRes.json()) as ApiResponse<UserData>;
+  if (!gettingUserInfoResult.success) {
+    throw new Error(
+      gettingUserInfoResult.messages ||
+        "Terjadi kesalahan. Coba lagi beberapa saat!"
+    );
+  }
+  return gettingUserInfoResult;
+};
+
 const useSessionStore = create(
   persist<UseSessionStore>(
     (set) => ({
@@ -36,12 +49,18 @@ const useSessionStore = create(
           const registerResult = (await registerRes.json()) as ApiResponse<{
             access_token: string;
           }>;
-          console.log({ token: registerResult.data.access_token });
+          if (!registerResult.success) {
+            throw new Error(
+              registerResult.messages ||
+                "Terjadi kesalahan. Coba lagi beberapa saat!"
+            );
+          }
           const { access_token } = registerResult.data;
-          const gettingUserInfoRes = await apiRequest.get("/me", access_token);
-          const gettingUserInfoResult =
-            (await gettingUserInfoRes.json()) as ApiResponse<UserData>;
-          console.log(gettingUserInfoResult.data);
+
+          const gettingUserInfoResult = await getUserInfoByAccessToken(
+            access_token
+          );
+
           set((prev) => ({
             ...prev,
             session: { token: access_token, user: gettingUserInfoResult.data },
@@ -58,15 +77,24 @@ const useSessionStore = create(
       login: async (body) => {
         try {
           set((prevState) => ({ ...prevState, isLoading: true }));
-          const res = await apiRequest.post("/login", body);
-          const result = await res.json();
-          console.log({ result });
-          if (result.error || result.errors) {
+          const loginRes = await apiRequest.post("/login", body);
+          const loginResult = (await loginRes.json()) as ApiResponse<{
+            access_token: string;
+          }>;
+          if (!loginResult.success) {
             throw new Error(
-              result.message || result.error || "Something went wrong"
+              loginResult.messages ||
+                "Terjadi kesalahan. Coba lagi beberapa saat!"
             );
           }
-          set((prev) => ({ ...prev, session: result }));
+          const { access_token } = loginResult.data;
+          const gettingUserInfoResult = await getUserInfoByAccessToken(
+            access_token
+          );
+          set((prev) => ({
+            ...prev,
+            session: { token: access_token, user: gettingUserInfoResult.data },
+          }));
           return { error: false, message: "OK" };
         } catch (error) {
           console.log(error);
