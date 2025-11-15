@@ -47,7 +47,7 @@ const RegisterForm = () => {
     if (error) {
       return form.setError("root", { message });
     }
-    return router.navigate("/");
+    return router.navigate("/(tabs)");
   };
 
   const isTeacher = form.watch().iam_a === "teacher";

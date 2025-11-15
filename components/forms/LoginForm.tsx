@@ -25,7 +25,7 @@ const LoginForm = () => {
   const onSubmit = async (values: LoginSchemaType) => {
     const { error, message } = await login(values);
     if (error) return form.setError("root", { message });
-    router.navigate("/");
+    router.navigate("/(tabs)");
   };
 
   return (
