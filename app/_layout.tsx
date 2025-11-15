@@ -14,7 +14,7 @@ export default function RootLayout() {
         <AuthGuard>
           <Stack>
             <Stack.Screen
-              name="index"
+              name="(tabs)"
               options={{
                 headerStyle: {
                   backgroundColor: theme === "dark" ? "black" : "white",
