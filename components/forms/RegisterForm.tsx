@@ -111,20 +111,20 @@ const RegisterForm = () => {
         <Text className="text-lg">Daftar Sebagai</Text>
         <Box className="flex flex-grow flex-row gap-2">
           <Button
-            variant={isTeacher ? "solid" : "outline"}
-            onPress={() => form.setValue("iam_a", "teacher")}
-            className="w-1/2 transition-all ease-in-out duration-300"
-          >
-            {isTeacher && <ButtonIcon as={CheckIcon} />}
-            <ButtonText>Pengajar</ButtonText>
-          </Button>
-          <Button
             variant={!isTeacher ? "solid" : "outline"}
             onPress={() => form.setValue("iam_a", "student")}
             className="w-1/2 transition-all ease-in-out duration-300"
           >
             {!isTeacher && <ButtonIcon as={CheckIcon} />}
             <ButtonText>Pelajar</ButtonText>
+          </Button>
+          <Button
+            variant={isTeacher ? "solid" : "outline"}
+            onPress={() => form.setValue("iam_a", "teacher")}
+            className="w-1/2 transition-all ease-in-out duration-300"
+          >
+            {isTeacher && <ButtonIcon as={CheckIcon} />}
+            <ButtonText>Pengajar</ButtonText>
           </Button>
         </Box>
         {form.formState.errors.iam_a?.message && (
