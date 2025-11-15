@@ -39,12 +39,13 @@ const RegisterForm = () => {
   return (
     <Box className="flex flex-col gap-4">
       {form.formState.errors.root?.message && (
-        <Text className="text-sm text-error-500">
+        <Text className="text-error-500">
           {form.formState.errors.root?.message}
         </Text>
       )}
+
       <Box className="flex flex-col gap-2">
-        <Text>Nama</Text>
+        <Text className="text-lg">Nama</Text>
         <Input
           variant="outline"
           size="md"
@@ -53,18 +54,19 @@ const RegisterForm = () => {
           isReadOnly={false}
         >
           <InputField
+            className="text-lg"
             onChangeText={(val) => form.setValue("name", val)}
             placeholder="Isikan Namamu"
           />
         </Input>
         {form.formState.errors.name?.message && (
-          <Text className="text-sm text-error-500">
+          <Text className="text-error-500">
             {form.formState.errors.name?.message}
           </Text>
         )}
       </Box>
       <Box className="flex flex-col gap-2">
-        <Text>Email</Text>
+        <Text className="text-lg">Email</Text>
         <Input
           variant="outline"
           size="md"
@@ -73,18 +75,19 @@ const RegisterForm = () => {
           isReadOnly={false}
         >
           <InputField
+            className="text-lg"
             onChangeText={(val) => form.setValue("email", val)}
             placeholder="Isikan Emailmu"
           />
         </Input>
         {form.formState.errors.email?.message && (
-          <Text className="text-sm text-error-500">
+          <Text className="text-error-500">
             {form.formState.errors.email?.message}
           </Text>
         )}
       </Box>
       <Box className="flex flex-col gap-2">
-        <Text>Password</Text>
+        <Text className="text-lg">Password</Text>
         <Input
           variant="outline"
           size="md"
@@ -93,18 +96,19 @@ const RegisterForm = () => {
           isReadOnly={false}
         >
           <InputField
+            className="text-lg"
             onChangeText={(val) => form.setValue("password", val)}
             placeholder="Isikan Password"
           />
         </Input>
         {form.formState.errors.password?.message && (
-          <Text className="text-sm text-error-500">
+          <Text className="text-error-500">
             {form.formState.errors.password?.message}
           </Text>
         )}
       </Box>
-      <Box className="flex flex-col gap-2">
-        <Text>Daftar Sebagai</Text>
+      <Box className="flex flex-col gap-3">
+        <Text className="text-lg">Daftar Sebagai</Text>
         <Box className="flex flex-grow flex-row gap-2">
           <Button
             variant={isTeacher ? "solid" : "outline"}
@@ -124,16 +128,16 @@ const RegisterForm = () => {
           </Button>
         </Box>
         {form.formState.errors.iam_a?.message && (
-          <Text className="text-sm text-error-500">
+          <Text className="text-error-500">
             {form.formState.errors.iam_a?.message}
           </Text>
         )}
         <Box className="flex flex-col gap-1">
-          <Text className="text-sm text-warning-300">
-            - Login sebagai pengajar untuk guru/dosen
+          <Text className="text-warning-300">
+            - Daftar sebagai pengajar untuk guru/dosen
           </Text>
-          <Text className="text-sm text-warning-300">
-            - Login sebagai pelajar untuk siswa/mahasiswa
+          <Text className="text-warning-300">
+            - Daftar sebagai pelajar untuk siswa/mahasiswa
           </Text>
         </Box>
       </Box>
