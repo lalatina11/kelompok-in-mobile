@@ -1,15 +1,18 @@
 import { Box } from "@/components/ui/box";
 import { Button, ButtonText } from "@/components/ui/button";
-import { Input, InputField } from "@/components/ui/input";
+import { Input, InputField, InputIcon } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
 import { loginSchema, LoginSchemaType } from "@/lib/schemas/AuthSchema";
 import useSessionStore from "@/lib/stores/useSessionStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
+import { EyeIcon, EyeOffIcon } from "../ui/icon";
+import { useState } from "react";
 
 const LoginForm = () => {
   const { login } = useSessionStore();
+  const [isShowPassword, setIsShowPassword] = useState(false);
   const router = useRouter();
   const form = useForm({
     resolver: zodResolver(loginSchema),
@@ -66,7 +69,14 @@ const LoginForm = () => {
             className="text-lg"
             onChangeText={(val) => form.setValue("password", val)}
             placeholder="Isikan Password"
+            type={isShowPassword ? "text" : "password"}
           />
+          <Button
+            onPress={() => setIsShowPassword((prev) => !prev)}
+            variant="outline"
+          >
+            <InputIcon as={isShowPassword ? EyeOffIcon : EyeIcon} />
+          </Button>
         </Input>
         {form.formState.errors.password?.message && (
           <Text className="text-error-500">
