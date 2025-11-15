@@ -20,6 +20,7 @@ export default function RootLayout() {
               headerTitleStyle: { color: theme === "dark" ? "white" : "black" },
               title: "Home",
               headerTitleAlign: "center",
+              headerBackVisible: false,
             }}
           />
           <Stack.Screen
