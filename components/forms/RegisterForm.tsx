@@ -47,7 +47,7 @@ const RegisterForm = () => {
   return (
     <Box className="flex flex-col gap-4">
       {form.formState.errors.root?.message && (
-        <Text className="text-error-500">
+        <Text className="text-error-500 text-center">
           {form.formState.errors.root?.message}
         </Text>
       )}

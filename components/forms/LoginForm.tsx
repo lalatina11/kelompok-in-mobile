@@ -28,12 +28,12 @@ const LoginForm = () => {
   return (
     <Box className="flex flex-col gap-4">
       {form.formState.errors.root?.message && (
-        <Text className="text-sm text-error-500">
+        <Text className="text-error-500 text-center">
           {form.formState.errors.root?.message}
         </Text>
       )}
       <Box className="flex flex-col gap-2">
-        <Text>Email</Text>
+        <Text className="text-lg">Email</Text>
         <Input
           variant="outline"
           size="md"
@@ -42,18 +42,19 @@ const LoginForm = () => {
           isReadOnly={false}
         >
           <InputField
+            className="text-lg"
             onChangeText={(val) => form.setValue("email", val)}
             placeholder="Isikan Emailmu"
           />
         </Input>
         {form.formState.errors.email?.message && (
-          <Text className="text-sm text-error-500">
+          <Text className="text-error-500">
             {form.formState.errors.email?.message}
           </Text>
         )}
       </Box>
       <Box className="flex flex-col gap-2">
-        <Text>Password</Text>
+        <Text className="text-lg">Password</Text>
         <Input
           variant="outline"
           size="md"
@@ -62,18 +63,19 @@ const LoginForm = () => {
           isReadOnly={false}
         >
           <InputField
+            className="text-lg"
             onChangeText={(val) => form.setValue("password", val)}
             placeholder="Isikan Password"
           />
         </Input>
         {form.formState.errors.password?.message && (
-          <Text className="text-sm text-error-500">
+          <Text className="text-error-500">
             {form.formState.errors.password?.message}
           </Text>
         )}
       </Box>
       <Button onPress={form.handleSubmit(onSubmit)}>
-        <ButtonText>Submit</ButtonText>
+        <ButtonText>Masuk</ButtonText>
       </Button>
     </Box>
   );
