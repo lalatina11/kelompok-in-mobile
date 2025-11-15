@@ -5,12 +5,12 @@ import { MoonIcon, SunIcon } from "./ui/icon";
 const ModeToggle = () => {
   const { theme, setTheme } = useThemeStore();
 
+  const handleSwitchTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
+
   return (
-    <Button
-      onPress={() => {
-        setTheme(theme === "light" ? "dark" : "light");
-      }}
-    >
+    <Button onPress={handleSwitchTheme}>
       <ButtonIcon as={theme === "light" ? MoonIcon : SunIcon} />
     </Button>
   );
