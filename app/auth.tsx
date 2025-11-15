@@ -24,26 +24,22 @@ const AuthPage = () => {
         >
           <Box>
             <Heading size="md" className="">
-              {isLoginPage ? "Login" : "Register"}
+              {isLoginPage ? "Masuk" : "Daftar"}
             </Heading>
             <Text size="sm">
-              {isLoginPage
-                ? "Login Into Your Account"
-                : "Register Your Account"}
+              {isLoginPage ? "Masuk ke Akun Anda" : "Daftarkan Akun Anda"}
             </Text>
           </Box>
           {isLoginPage ? <LoginForm /> : <RegisterForm />}
           <Box className="mx-auto flex flex-row gap-1">
-            <Text className="text-sm">
-              {isLoginPage
-                ? "Don't have an account?"
-                : "Already have an account?"}
+            <Text className="">
+              {isLoginPage ? "Belum punya akun?" : "Sudah punya akun?"}
             </Text>
             <Text
-              className="text-sm underline underline-offset-4"
+              className="underline underline-offset-4"
               onPress={() => setParams(isLoginPage ? "register" : "login")}
             >
-              {isLoginPage ? "register here" : "login here"}
+              {isLoginPage ? "daftar disini" : "masuk disini"}
             </Text>
           </Box>
         </Card>
