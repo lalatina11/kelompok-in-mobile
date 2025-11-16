@@ -1,10 +1,11 @@
-import React from "react";
-import { Tabs } from "expo-router";
+import useSessionStore from "@/lib/stores/useSessionStore";
 import useThemeStore from "@/lib/stores/useThemeStore";
+import { Tabs } from "expo-router";
 import { Home, School, Settings } from "lucide-react-native";
 
 const TabsLayout = () => {
   const { theme } = useThemeStore();
+  const { session } = useSessionStore();
   const isDark = theme === "dark";
   const isRevertColor = isDark ? "white" : "black";
   const isNotRevertColor = !isDark ? "white" : "black";
@@ -32,6 +33,7 @@ const TabsLayout = () => {
           tabBarIcon: ({ color }) => <School color={color} />,
           tabBarActiveTintColor: isNotRevertColor,
           title: "Classroom",
+          href: session && session.user.iam_a === "teacher" ? undefined : null,
         }}
       />
       <Tabs.Screen
