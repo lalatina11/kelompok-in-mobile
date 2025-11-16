@@ -22,7 +22,7 @@ export default function RootLayout() {
                 headerTitleStyle: {
                   color: theme === "dark" ? "white" : "black",
                 },
-                title: "Home",
+                title: "Kelompok IN",
                 headerTitleAlign: "center",
                 headerBackVisible: false,
               }}
