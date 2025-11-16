@@ -30,7 +30,7 @@ const getUserInfoByAccessToken = async (access_token: string) => {
     (await gettingUserInfoRes.json()) as ApiResponse<UserData>;
   if (!gettingUserInfoResult.success) {
     throw new Error(
-      gettingUserInfoResult.messages ||
+      gettingUserInfoResult.message ||
         "Terjadi kesalahan. Coba lagi beberapa saat!"
     );
   }
@@ -51,7 +51,7 @@ const useSessionStore = create(
           }>;
           if (!registerResult.success) {
             throw new Error(
-              registerResult.messages ||
+              registerResult.message ||
                 "Terjadi kesalahan. Coba lagi beberapa saat!"
             );
           }
@@ -83,7 +83,7 @@ const useSessionStore = create(
           }>;
           if (!loginResult.success) {
             throw new Error(
-              loginResult.messages ||
+              loginResult.message ||
                 "Terjadi kesalahan. Coba lagi beberapa saat!"
             );
           }
