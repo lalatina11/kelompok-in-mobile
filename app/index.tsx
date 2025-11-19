@@ -1,5 +1,4 @@
 import { Box } from "@/components/ui/box";
-import { Text } from "@/components/ui/text";
 import useSessionStore from "@/lib/stores/useSessionStore";
 import { UserRole } from "@/types/user";
 import { useRouter } from "expo-router";
