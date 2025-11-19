@@ -43,11 +43,17 @@ const RegisterForm = () => {
         message: "Password dan Konfirmasi Password harus sama",
       });
     }
-    const { error, message } = await register(values);
-    if (error) {
+    const { error, message, data } = await register(values);
+    if (error || !data) {
       return form.setError("root", { message });
     }
-    return router.navigate("/(tabs)");
+    return router.navigate(
+      data.iam_a === "student"
+        ? "/(student)"
+        : data.iam_a === "teacher"
+        ? "/(teacher)"
+        : "/(admin)"
+    );
   };
 
   const isTeacher = form.watch().iam_a === "teacher";

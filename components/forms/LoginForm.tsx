@@ -23,9 +23,17 @@ const LoginForm = () => {
   });
 
   const onSubmit = async (values: LoginSchemaType) => {
-    const { error, message } = await login(values);
-    if (error) return form.setError("root", { message });
-    router.navigate("/(tabs)");
+    const { error, message, data } = await login(values);
+    if (error || !data) {
+      return form.setError("root", { message });
+    }
+    return router.navigate(
+      data.iam_a === "student"
+        ? "/(student)"
+        : data.iam_a === "teacher"
+        ? "/(teacher)"
+        : "/(admin)"
+    );
   };
 
   return (
