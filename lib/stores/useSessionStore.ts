@@ -6,9 +6,10 @@ import { LoginSchemaType, RegisterSchemaType } from "../schemas/AuthSchema";
 import { ApiResponse } from "@/types/api-response";
 import { UserData } from "@/types/user";
 
-export type AuthResponse = {
+export type AuthResponse<T> = {
   error: boolean;
   message: string;
+  data?: T;
 };
 
 export type Session = {
@@ -19,9 +20,9 @@ export type Session = {
 export type UseSessionStore = {
   isLoading: boolean;
   session: Session | null;
-  register: (body: RegisterSchemaType) => Promise<AuthResponse>;
-  login: (body: LoginSchemaType) => Promise<AuthResponse>;
-  logout: (token: string) => Promise<AuthResponse>;
+  register: (body: RegisterSchemaType) => Promise<AuthResponse<UserData>>;
+  login: (body: LoginSchemaType) => Promise<AuthResponse<UserData>>;
+  logout: (token: string) => Promise<AuthResponse<UserData>>;
 };
 
 const getUserInfoByAccessToken = async (access_token: string) => {
@@ -65,7 +66,11 @@ const useSessionStore = create(
             ...prev,
             session: { token: access_token, user: gettingUserInfoResult.data },
           }));
-          return { error: false, message: "OK" };
+          return {
+            error: false,
+            message: "OK",
+            data: gettingUserInfoResult.data,
+          };
         } catch (error) {
           console.log(error);
           const { message } = error as Error;
@@ -95,7 +100,11 @@ const useSessionStore = create(
             ...prev,
             session: { token: access_token, user: gettingUserInfoResult.data },
           }));
-          return { error: false, message: "OK" };
+          return {
+            error: false,
+            message: "OK",
+            data: gettingUserInfoResult.data,
+          };
         } catch (error) {
           console.log(error);
           const { message } = error as Error;
