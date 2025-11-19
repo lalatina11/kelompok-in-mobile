@@ -1,5 +1,6 @@
 import LoginForm from "@/components/forms/LoginForm";
 import RegisterForm from "@/components/forms/RegisterForm";
+import ModeToggle from "@/components/ModeToggle";
 import { Box } from "@/components/ui/box";
 import { Card } from "@/components/ui/card";
 import { Heading } from "@/components/ui/heading";
@@ -22,13 +23,16 @@ const AuthPage = () => {
           variant="elevated"
           className="flex flex-col gap-6 bg-background-50"
         >
-          <Box>
-            <Heading size="md" className="">
-              {isLoginPage ? "Masuk" : "Daftar"}
-            </Heading>
-            <Text size="sm">
-              {isLoginPage ? "Masuk ke Akun Anda" : "Daftarkan Akun Anda"}
-            </Text>
+          <Box className="flex flex-row justify-between gap-2 items-center">
+            <Box>
+              <Heading size="md" className="">
+                {isLoginPage ? "Masuk" : "Daftar"}
+              </Heading>
+              <Text size="sm">
+                {isLoginPage ? "Masuk ke Akun Anda" : "Daftarkan Akun Anda"}
+              </Text>
+            </Box>
+            <ModeToggle />
           </Box>
           {isLoginPage ? <LoginForm /> : <RegisterForm />}
           <Box className="mx-auto flex flex-row gap-1">
