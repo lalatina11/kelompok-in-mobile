@@ -14,7 +14,35 @@ export default function RootLayout() {
         <AuthGuard>
           <Stack>
             <Stack.Screen
-              name="(tabs)"
+              name="index"
+              options={{
+                headerStyle: {
+                  backgroundColor: theme === "dark" ? "black" : "white",
+                },
+                headerTitleStyle: {
+                  color: theme === "dark" ? "white" : "black",
+                },
+                title: "Kelompok IN",
+                headerTitleAlign: "center",
+                headerBackVisible: false,
+              }}
+            />
+            <Stack.Screen
+              name="(teacher)"
+              options={{
+                headerStyle: {
+                  backgroundColor: theme === "dark" ? "black" : "white",
+                },
+                headerTitleStyle: {
+                  color: theme === "dark" ? "white" : "black",
+                },
+                title: "Kelompok IN",
+                headerTitleAlign: "center",
+                headerBackVisible: false,
+              }}
+            />
+            <Stack.Screen
+              name="(student)"
               options={{
                 headerStyle: {
                   backgroundColor: theme === "dark" ? "black" : "white",
