@@ -1,6 +1,6 @@
 import useThemeStore from "@/lib/stores/useThemeStore";
 import { Tabs } from "expo-router";
-import { Home, School, Settings } from "lucide-react-native";
+import { Home, School, Settings, TableProperties } from "lucide-react-native";
 
 const TabsLayout = () => {
   const { theme } = useThemeStore();
@@ -18,6 +18,7 @@ const TabsLayout = () => {
           tabBarIcon: ({ color }) => <Home color={color} />,
           tabBarActiveTintColor: isNotRevertColor,
           title: "Home",
+          href: "/(teacher)",
         }}
       />
       <Tabs.Screen
@@ -31,6 +32,21 @@ const TabsLayout = () => {
           tabBarIcon: ({ color }) => <School color={color} />,
           tabBarActiveTintColor: isNotRevertColor,
           title: "Classroom",
+          href: "/(teacher)/classroom",
+        }}
+      />
+      <Tabs.Screen
+        name="project"
+        options={{
+          headerShown: false,
+          tabBarStyle: {
+            backgroundColor: isNotRevertColor,
+          },
+          tabBarActiveBackgroundColor: isRevertColor,
+          tabBarIcon: ({ color }) => <TableProperties color={color} />,
+          tabBarActiveTintColor: isNotRevertColor,
+          title: "Project",
+          href: "/(teacher)/project",
         }}
       />
       <Tabs.Screen
@@ -44,6 +60,7 @@ const TabsLayout = () => {
           tabBarIcon: ({ color }) => <Settings color={color} />,
           tabBarActiveTintColor: isNotRevertColor,
           title: "Setting",
+          href: "/(teacher)/setting",
         }}
       />
     </Tabs>
